@@ -10,6 +10,7 @@ class Pair(models.Model):
     ticker2 = models.ForeignKey('Cuzcobot.Security', on_delete=models.PROTECT, related_name='secondSecurity')
     window = models.DecimalField(max_digits=4, decimal_places=0)
     spreadHigh = models.DecimalField(max_digits=5, decimal_places=4)
+    spreadLow = models.DecimalField(max_digits=5, decimal_places=4)
 
     def check_cointegration(self, v1: list, v2: list) -> Tuple[bool, float]:
         p_value = coint(v1, v2)
