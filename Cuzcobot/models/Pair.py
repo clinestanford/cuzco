@@ -32,3 +32,4 @@ class Pair(models.Model):
 
 		return is_coint_bool
 
+
