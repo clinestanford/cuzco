@@ -1,6 +1,12 @@
 from Cuzcobot.models import Order
 from Cuzcobot.models import Pair as Pairs
 
+from Cuzcobot.models import Pairs, ApplicationUser, Order, Price
+from Cuzcobot.dataAPI.Client import api
+import API_MASTER as apiCalls
+
+from django.http import HttpResponse
+
 
 # Create your views here.
 
@@ -143,4 +149,18 @@ def pairs(request):
 
 def fillThirtyDays(request):
     ticker = request.GET["ticker"]
-    return
+    chart = apiCalls.getSingleChart(ticker, '3m')
+
+    for obj in chart:
+    	a = Price.object.create(
+    		ticker = str(ticer),
+    		priceDate = obj["date"],
+    		open = obj["open"],
+    		current = null,
+    		close = obj["cloes"],
+    		high = obj["high"],
+    		low = obj["low"],
+    		volume = obj["volume"]
+    		).save()
+
+    return HttpResponse(chart)
