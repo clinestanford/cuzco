@@ -25,17 +25,11 @@ class Pair(models.Model):
             return (True, p_value)
         else:
             return (False, p_value)
-          
-    def get_data(self, name) -> list:
-        Price.objects.filter()
-        pass
 
     @property
-    def is_cointegrated(self):
+    def isCointegrated(self):
         is_coint_bool, p_value = self.check_cointegration()
         return is_coint_bool
-
-
 
     def getAveragePriceDiff(self):
         today = datetime.datetime.today()
@@ -52,12 +46,6 @@ class Pair(models.Model):
         delta = datetime.delta(days=self.window)
         oldestDate = today - delta
         data = Prices.objects.filter(ticker=ticker, priceDate__gte=oldestDate).close
-        
-
-    @property
-    def isCointegrated(self):
-        is_coint_bool, p_value = self.checkCointegration()
-
 
     @property
     def getAveragePrices(self) -> Tuple[float, float]:

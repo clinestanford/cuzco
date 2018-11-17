@@ -134,7 +134,7 @@ def pairs(request):
                 orderDirection="B",
                 timeInForce="D",
                 limitPrice="None",
-                stopPrice=str(price * .9)
+                stopPrice="None"
             )
 
 
