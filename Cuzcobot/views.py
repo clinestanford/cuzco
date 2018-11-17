@@ -24,7 +24,7 @@ def pairs(request):
 				if price1/avgPrice1 > price2/avgPrice2:
 					#sell ticker 1
 					#buy ticker 2
-					#pass
+					pass
 
 				else:
 					#the percentage over price1 is lower than
@@ -37,7 +37,7 @@ def pairs(request):
 				if price2/avgPrice2 > price1/avgPrice1:
 					#sell ticker2
 					#buy ticker1
-					#pass
+					pass
 
 				else:
 					#hang out for a bit, we own ticker2, 

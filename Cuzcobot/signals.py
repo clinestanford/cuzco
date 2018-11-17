@@ -2,7 +2,7 @@ from Cuzcobot.models import Order
 from Cuzcobot.dataAPI.Client import api
 import time, logging
 
-def executeOrder(sender, instance:Order, created):
+def executeOrder(sender, instance:Order, created, **kwargs):
     if created:
         try:
             # logger.info(f'submit(sell/buy): {order}')
