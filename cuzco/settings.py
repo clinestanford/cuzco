@@ -38,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Cuzcobot.apps.CuzcobotConfig',
+'django.contrib.humanize',
+'rest_framework',
+'storages',
+    'webpack_loader',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -120,3 +125,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+API_PUBLIC = 'AKHJ8PWF3ZFFY80RTHSZ'
+API_SECRET = 'NWfbVkeAbR95F/2hWaMJWmx/GRk9xf8U2BVOBNEB'
