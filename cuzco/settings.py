@@ -142,12 +142,25 @@ USE_L10N = True
 USE_TZ = True
 
 AUTH_USER_MODEL = 'Cuzcobot.ApplicationUser'
+AWS_ACCESS_KEY_ID = 'AKIAIICG4ZFMPETWUCOA'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'cuzco'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_LOCATION = 'dev/static'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'assets'),
+]
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+DEFAULT_FILE_STORAGE = 'payroll.storage_backends.MediaStorage'
 
 API_PUBLIC = 'AKHJ8PWF3ZFFY80RTHSZ'
 API_SECRET = 'NWfbVkeAbR95F/2hWaMJWmx/GRk9xf8U2BVOBNEB'
