@@ -1,4 +1,6 @@
 from django.db import models
+from statsmodels.tsa.stattools import coint
+
 
 import numpy as np
 
