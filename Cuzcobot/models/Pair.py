@@ -23,19 +23,14 @@ class Pair(models.Model):
         else:
             return (False, p_value)
 
-    def get_data(self, name):
+    def get_data(self, name)->list:
         pass
 
     @property
     def is_cointegrated(self):
+        data1 = self.get_data(self.ticker1)
+        data2 = self.get_data(self.ticker2)
+
         is_coint_bool, p_value = self.check_cointegration()
 
-	@property
-	def getAveragePriceDiff(self):
-		today = datetime.datetime.today()
-		delta = datetime.delta(days=self.window)
-		oldestDate = today - delta
-		tick1Avg = Prices.objects.filter(ticker=self.ticker1, priceDate__gte=oldestDate).Aggregate(Avg('close'))["avg__close"]
-		tick2Avg = Prices.objects.filter(ticker=self.ticker2, priceDate__gte=oldestDate).Aggregate(Avg('close'))["avg__close"]
-
-		return (tick1Avg, tick2Avg)
+        return (tick1Avg, tick2Avg)
