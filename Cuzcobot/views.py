@@ -3,7 +3,7 @@ from Cuzcobot.models import Pair as Pairs
 
 
 # Create your views here.
-
+from django.http import HttpResponse
 def pairs(request):
     user = request.user
 
