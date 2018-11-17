@@ -51,7 +51,7 @@ class Pair(models.Model):
         today = datetime.datetime.today()
         delta = datetime.delta(days=self.window)
         oldestDate = today - delta
-        data = Prices.objects.filter(ticker=ticker, priceData_gte=oldestData).close
+        data = Prices.objects.filter(ticker=ticker, priceDate__gte=oldestDate).close
         
 
     @property
