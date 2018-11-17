@@ -1,15 +1,14 @@
 from django.db import models
+from typing import Tuple
 from statsmodels.tsa.stattools import coint
-
-
 import numpy as np
 
 class Pair(models.Model):
-	ticker1 = models.CharField(max_length=8)
-	ticker2 = models.CharField(max_length=8)
-	window = models.DecimalField(max_digits=4)
-
-	#checks if the two pairs are still cointegrated for the last window frame
+    ticker1 = models.ForeignKey('Cuzcobot.Security', on_delete=models.PROTECT)
+    ticker2 = models.ForeignKey('Cuzcobot.Security', on_delete=models.PROTECT, related_name='secondSecurity')
+    window = models.DecimalField(max_digits=4,decimal_places=0)
+    
+    #checks if the two pairs are still cointegrated for the last window frame
 	def check_cointegration(self, v1: list, v2: list) -> Tuple[bool, float]:
 		# Date indexed pricing data for stickers
 		p_value = coint(v1, v2)[1]
@@ -33,5 +32,4 @@ class Pair(models.Model):
 		is_coint_bool, p_value = self.check_cointegration(data1, data2)
 
 		return is_coint_bool
-
 
