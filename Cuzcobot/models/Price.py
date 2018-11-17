@@ -9,3 +9,4 @@ class Price(models.Model):
     high = models.DecimalField(max_digits=16, decimal_places=3)
     low = models.DecimalField(max_digits=16, decimal_places=3)
     volume = models.BigIntegerField()
+
