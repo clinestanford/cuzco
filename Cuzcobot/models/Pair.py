@@ -16,8 +16,8 @@ class Pair(models.Model):
     tradable = models.BooleanField(default=False)
 
     def checkCointegration(self) -> Tuple[bool, float]:
-        data1 = self.retrieveData(self.ticker1)
-        data2 = self.retrieveData(self.ticker2)
+        data1 = self.getData(self.ticker1)
+        data2 = self.getData(self.ticker2)
 
         p_value = coint(data1, data2)
 
@@ -28,20 +28,12 @@ class Pair(models.Model):
 
     @property
     def isCointegrated(self):
-        is_coint_bool, p_value = self.check_cointegration()
-        return is_coint_bool
+        isCointBool = self.check_cointegration()[0]
+        return isCointBool
 
-    def getAveragePriceDiff(self):
-        today = datetime.datetime.today()
-        delta = datetime.timedelta(days=float(self.window))
-        oldestDate = today - delta
-        tick1Avg = Price.objects.filter(ticker=self.ticker1, priceDate__gte=oldestDate).Aggregate(models.Avg('close'))[
-            "avg__close"]
-        tick2Avg = Price.objects.filter(ticker=self.ticker2, priceDate__gte=oldestDate).Aggregate(models.Avg('close'))[
-            "avg__close"]
 
     # ToDo: return type?
-    def retrieveData(self, ticker: str):
+    def getData(self, ticker: str):
         today = datetime.datetime.today()
         delta = datetime.delta(days=self.window)
         oldestDate = today - delta

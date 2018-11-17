@@ -15,7 +15,7 @@ def pairs(request):
 
     for pair in pairs:
 
-        avgPrice1, avgPrice2 = pair.getAveragePriceDiff()
+        avgPrice1, avgPrice2 = pair.getAveragePrices()
         price1 = pair.ticker1.marketPrice()
         price2 = pair.ticker2.marketPrice()
 
