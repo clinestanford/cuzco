@@ -10,7 +10,7 @@ def pairs(request):
 	pairs = Pairs.objects.all()
 
 	for pair in pairs:
-		avgPrice1, avgPrice2 = pair.getAveragePriceDiff()
+		avgPrice1, avgPrice2 = pair.getAveragePrices()
 		price1 = pair.ticker1.price()
 		price2 = pair.ticker2.price()
 
@@ -43,6 +43,7 @@ def pairs(request):
 					#hang out for a bit, we own ticker2, 
 					#but the average price2 is lower than 
 					#average price1, so hang onto it
+                pass
 
 			else:
 				#buy the "lower" of the two 
