@@ -1,9 +1,11 @@
+import datetime
 from typing import Tuple
 
 from django.db import models
 from statsmodels.tsa.stattools import coint
-import numpy as np
-import datetime
+
+from Cuzcobot.models import Price
+
 
 class Pair(models.Model):
     ticker1 = models.ForeignKey('Cuzcobot.Security', on_delete=models.PROTECT)
@@ -11,6 +13,7 @@ class Pair(models.Model):
     window = models.DecimalField(max_digits=4, decimal_places=0)
     spreadHigh = models.DecimalField(max_digits=5, decimal_places=4)
     spreadLow = models.DecimalField(max_digits=5, decimal_places=4)
+    tradable = models.BooleanField(default=False)
 
     def check_cointegration(self) -> Tuple[bool, float]:
         data1 = self.get_data(self.ticker1)
@@ -23,7 +26,7 @@ class Pair(models.Model):
         else:
             return (False, p_value)
 
-    def get_data(self, name)->list:
+    def get_data(self, name) -> list:
         pass
 
     @property
@@ -33,4 +36,13 @@ class Pair(models.Model):
 
         is_coint_bool, p_value = self.check_cointegration()
 
-        return (tick1Avg, tick2Avg)
+    def getAveragePriceDiff(self):
+        today = datetime.datetime.today()
+        delta = datetime.timedelta(days=float(self.window))
+        oldestDate = today - delta
+        tick1Avg = Price.objects.filter(ticker=self.ticker1, priceDate__gte=oldestDate).Aggregate(models.Avg('close'))[
+            "avg__close"]
+        tick2Avg = Price.objects.filter(ticker=self.ticker2, priceDate__gte=oldestDate).Aggregate(models.Avg('close'))[
+            "avg__close"]
+
+        return tick1Avg, tick2Avg

@@ -23,3 +23,6 @@ class Security(models.Model):
         return Transaction.objects.filter(ticker=self.tickerSymbol).aggregate(Sum('shares'))['shares__Sum']
 
 
+Security.objects.all().values()
+
+
