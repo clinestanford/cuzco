@@ -27,14 +27,15 @@ class Pair(models.Model):
             return (False, p_value)
 
     def get_data(self, name) -> list:
+        Price.objects.filter()
         pass
 
     @property
     def is_cointegrated(self):
-        data1 = self.get_data(self.ticker1)
-        data2 = self.get_data(self.ticker2)
-
         is_coint_bool, p_value = self.check_cointegration()
+        return is_coint_bool
+
+
 
     def getAveragePriceDiff(self):
         today = datetime.datetime.today()
