@@ -25,7 +25,7 @@ SECRET_KEY = 'wj9fgni%q#_)jv&u4@!2+@82b+bn$2(#iqd5)xvw^qs5c$xq5k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Cuzcobot.apps.CuzcobotConfig',
+'django.contrib.humanize',
+'rest_framework',
+'storages',
+    'webpack_loader',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -71,14 +76,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cuzco.wsgi.application'
 
+AUTHENTICATION_BACKENDS = [
+    'Cuzcobot.backend.CuzcoBotAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend'
+]
+
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'cuzco',
+        'USER': 'bot',
+        'PASSWORD': 'BigBlue1888',
+        'HOST': 'cuzcobotdev.ckigsvc0jdkk.us-east-1.rds.amazonaws.com',
+        'PORT': '3306'
     }
 }
 
@@ -115,8 +129,34 @@ USE_L10N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = 'Cuzcobot.ApplicationUser'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+API_PUBLIC = 'AKHJ8PWF3ZFFY80RTHSZ'
+API_SECRET = 'NWfbVkeAbR95F/2hWaMJWmx/GRk9xf8U2BVOBNEB'
+
+REST_FRAMEWORK_TOKEN_EXPIRE_HOURS = 72
+
+REST_FRAMEWORK = {
+    # When you enable API versioning, the request.version attribute will contain a string
+    # that corresponds to the version requested in the incoming client request.
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'payroll.authenticators.ExpiringTokenAuthentication',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'payroll.permissions.GeneralHierarchyScheme',
+    )
+}
+os.environ['APCA_API_BASE_URL'] = 'https://paper-api.alpaca.markets'
+os.environ['APCA_PAPER_PUBLIC'] = 'AKCZ31SOGBRUUWIYKPWS'
+os.environ['APCA_PAPER_PRIVATE'] = 'In9f9Xh3FB1jwkCnmcTqDqN/3qr30hqOsj8Ju2XT'

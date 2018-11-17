@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from Cuzcobot.views import pairs
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #path('trade/', ),
+    #path('buy/', ),
+    #path('sell/'),
+    #path('history/'),
+    path('pairs/', pairs),
+    #path('test')
 ]
