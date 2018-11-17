@@ -1,5 +1,6 @@
-from django.db import models
 from typing import Tuple
+
+from django.db import models
 from statsmodels.tsa.stattools import coint
 import numpy as np
 import datetime
@@ -24,16 +25,22 @@ class Pair(models.Model):
 		#need to use the self.window value to return the right amount of data
 		
 
-		return 
+    def check_cointegration(self, v1: list, v2: list) -> Tuple[bool, float]:
+        p_value = coint(v1, v2)
+        if p_value < 0.05:
+            return (True, p_value)
+        else:
+            return (False, p_value)
 
-	@property
-	def is_cointegrated(self):
-		data1 = get_data(self.ticker1)
-		data2 = get_data(self.ticker2)
+    def get_data(self, name):
+        pass
 
-		is_coint_bool, p_value = self.check_cointegration(data1, data2)
+    @property
+    def is_cointegrated(self):
+        data1 = self.get_data(self.ticker1)
+        data2 = self.get_data(self.ticker2)
 
-		return is_coint_bool
+        is_coint_bool, p_value = self.check_cointegration(data1, data2)
 
 	@property
 	def getAveragePriceDiff(self):
@@ -44,7 +51,3 @@ class Pair(models.Model):
 		tick2Avg = Prices.objects.filter(ticker=self.ticker2, priceDate__gte=oldestDate).Aggregate(Avg('close'))["avg__close"]
 
 		return (tick1Avg, tick2Avg)
-
-
-	
-

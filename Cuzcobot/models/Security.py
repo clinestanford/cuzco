@@ -5,6 +5,7 @@ from Cuzcobot.models import Price
 
 class Security(models.Model):
     tickerSymbol = models.CharField(max_length=6, verbose_name='Security Ticker Symbol')
+    sharesOwned = models.IntegerField()
 
     @property
     def price(self):
