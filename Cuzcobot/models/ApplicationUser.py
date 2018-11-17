@@ -8,6 +8,7 @@ from string import ascii_uppercase, digits
 from random import choice
 
 from Cuzcobot.managers.customusermanager import userman
+from Cuzcobot.dataAPI.Client import api
 
 chars = ascii_uppercase + digits
 
@@ -15,6 +16,7 @@ class ApplicationUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='Email Address', unique=True)
     first_name = models.CharField(max_length=60, blank=True)
     last_name = models.CharField(max_length=60)
+    paperTrade =models.BooleanField(default=True)
     is_active = models.BooleanField(verbose_name='active', default=True)
     is_superuser = models.BooleanField(verbose_name='Super Admin', default=False)
     is_admin = models.BooleanField(verbose_name='Staff', default=False)
@@ -49,3 +51,7 @@ class ApplicationUser(AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         return self.is_admin
+
+    def getBuyingPower(self):
+        # print('api.get_account().buying_power')
+        return api.get_account().buying_power  # string<number>

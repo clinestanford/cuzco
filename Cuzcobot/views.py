@@ -30,6 +30,7 @@ def pairs(request):
 				if price1/avgPrice1 > price2/avgPrice2:
 					#sell ticker 1
 					#buy ticker 2
+					pass
 					#pass
 					buy.append(pair.ticker2)
 					sell.append(pair.ticker1)
@@ -45,9 +46,12 @@ def pairs(request):
 				if price2/avgPrice2 > price1/avgPrice1:
 					#sell ticker2
 					#buy ticker1
+					pass
+
 					#pass
 					buy.append(pair.ticker1)
 					sell.append(pair.ticker2)
+
 
 				else:
 					#hang out for a bit, we own ticker2, 

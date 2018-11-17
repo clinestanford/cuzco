@@ -1,4 +1,5 @@
 from django.db import models
+from Cuzcobot.dataAPI.Client import api
 
 ASSETCLASSES = [
     ("equity", "E"),
@@ -56,13 +57,42 @@ class Order(models.Model):
     assetClass = models.CharField(choices=ASSETCLASSES, max_length=1)
     shares = models.IntegerField()
     filledShares = models.IntegerField()
-    orderType = models.CharField(choices=ORDERTYPES, max_length=3)
+    orderType = models.CharField(choices=ORDERTYPES, max_length=3, default='MKT')
     orderDirection = models.CharField(choices=DIRECTIONS, max_length=1)
     timeInForce = models.CharField(choices=TIMEINFORCE, max_length=1)
     limitPrice = models.DecimalField(max_digits=15, decimal_places=2)
     stopPrice = models.DecimalField(max_digits=15, decimal_places=2)
     filledAvgPrice = models.DecimalField(max_digits=15, decimal_places=2)
     orderStatus = models.CharField(choices=ORDERSTATUS, max_length=3)
+
+    def getOrderList(self, status='open', limit='50', direction='desc'):
+        return api.get_order(status, limit, direction)
+
+    def getOrder(self):
+        order_data = api.get_order(self.orderID)
+        return order_data
+
+    def getOrderDirection(self):
+        if self.orderDirection == 'B':
+            direction = 'buy'
+        else:
+            direction = 'sell'
+
+        return direction
+
+
+    def getTimeInForce(self):
+        if self.timeInForce == 'D':
+            return 'day'
+        elif self.timeInForce == 'G':
+            return 'gtc'
+        elif self.timeInForce == 'O':
+            return 'opg'
+        elif self.timeInForce == 'I':
+            return 'ioc'
+        elif self.timeInForce == 'F':
+            return 'fok'
+
 
     @property
     def availableToCancel(self):

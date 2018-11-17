@@ -1,8 +1,11 @@
+import datetime
+from typing import Tuple
 from typing import Tuple, List
 from django.db import models
 from statsmodels.tsa.stattools import coint
-import numpy as np
-import datetime
+
+from Cuzcobot.models import Price
+
 
 class Pair(models.Model):
     ticker1 = models.ForeignKey('Cuzcobot.Security', on_delete=models.PROTECT)
@@ -10,6 +13,7 @@ class Pair(models.Model):
     window = models.DecimalField(max_digits=4, decimal_places=0)
     spreadHigh = models.DecimalField(max_digits=5, decimal_places=4)
     spreadLow = models.DecimalField(max_digits=5, decimal_places=4)
+    tradable = models.BooleanField(default=False)
 
     def checkCointegration(self) -> Tuple[bool, float]:
         data1 = self.retrieveData(self.ticker1)
@@ -21,6 +25,26 @@ class Pair(models.Model):
             return (True, p_value)
         else:
             return (False, p_value)
+          
+    def get_data(self, name) -> list:
+        Price.objects.filter()
+        pass
+
+    @property
+    def is_cointegrated(self):
+        is_coint_bool, p_value = self.check_cointegration()
+        return is_coint_bool
+
+
+
+    def getAveragePriceDiff(self):
+        today = datetime.datetime.today()
+        delta = datetime.timedelta(days=float(self.window))
+        oldestDate = today - delta
+        tick1Avg = Price.objects.filter(ticker=self.ticker1, priceDate__gte=oldestDate).Aggregate(models.Avg('close'))[
+            "avg__close"]
+        tick2Avg = Price.objects.filter(ticker=self.ticker2, priceDate__gte=oldestDate).Aggregate(models.Avg('close'))[
+            "avg__close"]
 
     # ToDo: return type?
     def retrieveData(self, ticker: str):

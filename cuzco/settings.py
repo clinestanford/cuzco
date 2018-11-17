@@ -157,3 +157,6 @@ REST_FRAMEWORK = {
         'payroll.permissions.GeneralHierarchyScheme',
     )
 }
+os.environ['APCA_API_BASE_URL'] = 'https://paper-api.alpaca.markets'
+os.environ['APCA_PAPER_PUBLIC'] = 'AKCZ31SOGBRUUWIYKPWS'
+os.environ['APCA_PAPER_PRIVATE'] = 'In9f9Xh3FB1jwkCnmcTqDqN/3qr30hqOsj8Ju2XT'
