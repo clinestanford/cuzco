@@ -15,14 +15,14 @@ def pairs(request):
 		price2 = pair.ticker2.price()
 
 		averageSpread = max(avgPrice1, avgPrice2) - min(avgPrice1, avgPrice2)
-		currentSpread = max(price1, price2) - min(price1 - price2)
+		currentSpread = max(price1, price2) - min(price1, price2)
 
 		if currentSpread > averageSpread * pair.spreadHigh:
 			#buy the security that is low, and sell the high
 			if pair.ticker1.currentPositionShares >= 1:
 				#sell ticker 1, buy ticker 2
 
-			elif: pair.ticker2.currentPositionShares >= 1:
+			elif pair.ticker2.currentPositionShares >= 1:
 				#sell ticker 2, buy ticker 1
 
 			else:
@@ -34,7 +34,7 @@ def pairs(request):
 			if pair.ticker1.currentPositionShares >= 1:
 				#sell ticker 1, buy ticker 2
 
-			elif: pair.ticker2.currentPositionShares >= 1:
+			elif pair.ticker2.currentPositionShares >= 1:
 				#sell ticker 2, buy ticker 1
 
 			else:
