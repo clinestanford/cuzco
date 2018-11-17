@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Pairs, ApplicationUser
+from .models import Pairs, ApplicationUser, Order
 
 
 # Create your views here.
@@ -12,12 +12,12 @@ def pairs(request):
 	buy = []
 	sell = []
 
-	pairs = Pairs.objects.all()
+	pairs = Pairs.objects.filter(tradable=True).all()
 
 	for pair in pairs:
 		avgPrice1, avgPrice2 = pair.getAveragePriceDiff()
-		price1 = pair.ticker1.price()
-		price2 = pair.ticker2.price()
+		price1 = pair.ticker1.marketPrice()
+		price2 = pair.ticker2.marketPrice()
 
 		averageSpread = max(avgPrice1, avgPrice2) - min(avgPrice1, avgPrice2)
 		currentSpread = max(price1, price2) - min(price1, price2)
@@ -52,6 +52,7 @@ def pairs(request):
 					#hang out for a bit, we own ticker2, 
 					#but the average price2 is lower than 
 					#average price1, so hang onto it
+					pass
 
 			else:
 				#buy the "lower" of the two 
@@ -78,6 +79,7 @@ def pairs(request):
 					sell.append(pair.ticker1)
 				else:
 					#do nothing
+					pass
 
 			elif pair.ticker2.currentPositionShares >= 1:
 				#sell ticker 2, buy ticker 1
@@ -89,6 +91,7 @@ def pairs(request):
 					sell.append(pair.ticker2)
 				else:
 					#do nothing
+					pass
 
 			else:
 				# buy the "higher" of the two
@@ -99,28 +102,42 @@ def pairs(request):
 				else:
 					#buy ticker1
 					buy.append(pair.ticker1)
-
-	int i
-
 	 
 	#sell sec.tickerSymbol
 	for sec in sell:
-
-		
+		price = sec.price()
+		numberOwned = sec.sharesOwned
+		if numberOwned >= 1:
+			Order.objects.create(
+				ticker = sec,
+				shares = str(numberOwned),
+				orderDirection = "S",
+				timeInForce = "G",
+				limitPrice = "None",
+				stopPrice = "None"
+				)
 
 	cash = user.getBuyingPower()
 
 	#if you want to mitigate risk, you can change the 
 	#10 below to whatever portion you want. You may not want
 	#to enter a position with more/less than 10% of buying power
-	allocatedPercent = cash / 10
-
+	moneyForEach = cash / 10
 
 	#buy sec.tickerSymbol
 	for sec in buy:
 		price = sec.price()
-		sharesToBuy = tenth // price
+		sharesToBuy = moneyForEach // price
 		if sharesToBuy >= 1:
-			#buy sharesToBuy of sec.tickerSymbol
+			Order.objects.create(
+				ticker = sec,
+				shares = str(sharesToBuy),
+				orderDirection = "B",
+				timeInForce = "D",
+				limitPrice = "None",
+				stopPrice = str(price*.9)
+				)
 
-
+def fillThirtyDays(request):
+	ticker = request.GET["ticker"]
+	return
