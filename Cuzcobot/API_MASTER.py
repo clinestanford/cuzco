@@ -285,6 +285,96 @@ def getSingleChart(ticker, range):
 
 
 
+def getFullBatch(range, type):
+    beginingBatchReq = 'https://api.iextrading.com/1.0/stock/market/batch?symbols='
+    first100 = 'MMM,ABT,ABBV,ABMD,ACN,ATVI,ADBE,AMD,AAP,AES,AET,AMG,AFL,A,APD,AKAM,ALK,ALB,ARE,ALXN,ALGN,ALLE,AGN,ADS,LNT,ALL,GOOGL,GOOG,MO,AMZN,AEE,AAL,AEP,AXP,AIG,AMT,AWK,AMP,ABC,AME,AMGN,APH,APC,ADI,ANSS,ANTM,AON,AOS,APA,AIV,AAPL,AMAT,APTV,ADM,ARNC,ANET,AJG,AIZ,T,ADSK,ADP,AZO,AVB,AVY,BHGE,BLL,BAC,BK,BAX,BBT,BDX,BRK-B,BBY,BIIB,BLK,HRB,BA,BKNG,BWA,BXP,BSX,BHF,BMY,AVGO,BR,BF-B,CHRW,COG,CDNS,CPB,COF,CAH,KMX,CCL,CAT,CBOE,CBRE,CBS,CELG&'
+    second100 = 'CNC,CNP,CTL,CERN,CF,SCHW,CHTR,CVX,CMG,CB,CHD,CI,XEC,CINF,CTAS,CSCO,C,CFG,CTXS,CLX,CME,CMS,KO,CTSH,CL,CMCSA,CMA,CAG,CXO,COP,ED,STZ,COO,CPRT,GLW,COST,COTY,CCI,CSX,CMI,CVS,DHI,DHR,DRI,DVA,DE,DAL,XRAY,DVN,DLR,DFS,DISCA,DISCK,DISH,DG,DLTR,D,DOV,DWDP,DTE,DRE,DUK,DXC,ETFC,EMN,ETN,EBAY,ECL,EIX,EW,EA,EMR,ETR,EOG,EFX,EQIX,EQR,ESS,EL,EVRG,ES,RE,EXC,EXPE,EXPD,ESRX,EXR,XOM,FFIV,FB,FAST,FRT,FDX,FIS,FITB,FE,FISV,FLT,FLIR,FLS&'
+    third100 = 'FLR,FMC,FL,F,FTNT,FTV,FBHS,BEN,FCX,GPS,GRMN,IT,GD,GE,GIS,GM,GPC,GILD,GPN,GS,GT,GWW,HAL,HBI,HOG,HRS,HIG,HAS,HCA,HCP,HP,HSIC,HSY,HES,HPE,HLT,HFC,HOLX,HD,HON,HRL,HST,HPQ,HUM,HBAN,HII,IDXX,INFO,ITW,ILMN,IR,INTC,ICE,IBM,INCY,IP,IPG,IFF,INTU,ISRG,IVZ,IPGP,IQV,IRM,JKHY,JEC,JBHT,JEF,SJM,JNJ,JCI,JPM,JNPR,KSU,K,KEY,KEYS,KMB,KIM,KMI,KLAC,KSS,KHC,KR,LB,LLL,LH,LRCX,LEG,LEN,LLY,LNC,LIN,LKQ,LMT,L,LOW,LYB,MTB,MAC&'
+    fourth100 = 'M,MRO,MPC,MAR,MMC,MLM,MAS,MA,MAT,MKC,MCD,MCK,MDT,MRK,MET,MTD,MGM,KORS,MCHP,MU,MSFT,MAA,MHK,TAP,MDLZ,MNST,MCO,MS,MOS,MSI,MSCI,MYL,NDAQ,NOV,NKTR,NTAP,NFLX,NWL,NFX,NEM,NWSA,NWS,NEE,NLSN,NKE,NI,NBL,JWN,NSC,NTRS,NOC,NCLH,NRG,NUE,NVDA,ORLY,OXY,OMC,OKE,ORCL,PCAR,PKG,PH,PAYX,PYPL,PNR,PBCT,PEP,PKI,PRGO,PFE,PCG,PM,PSX,PNW,PXD,PNC,RL,PPG,PPL,PFG,PG,PGR,PLD,PRU,PEG,PSA,PHM,PVH,QRVO,PWR,QCOM,DGX,RJF,RTN,O,RHT,REG,REGN,RF&'
+    fifth100 = 'RSG,RMD,RHI,ROK,COL,ROL,ROP,ROST,RCL,CRM,SBAC,SCG,SLB,STX,SEE,SRE,SHW,SPG,SWKS,SLG,SNA,SO,LUV,SPGI,SWK,SBUX,STT,SRCL,SYK,STI,SIVB,SYMC,SYF,SNPS,SYY,TROW,TTWO,TPR,TGT,TEL,FTI,TXN,TXT,TMO,TIF,TWTR,TJX,TMK,TSS,TSCO,TDG,TRV,TRIP,FOXA,FOX,TSN,UDR,ULTA,USB,UAA,UA,UNP,UAL,UNH,UPS,URI,UTX,UHS,UNM,VFC,VLO,VAR,VTR,VRSN,VRSK,VZ,VRTX,VIAB,V,VNO,VMC,WMT,WBA,DIS,WM,WAT,WEC,WCG,WFC,WELL,WDC,WU,WRK,WY,WHR,WMB,WLTW,WYNN,XEL,XRX&'
+    sixth5 = 'XLNX,XYL,YUM,ZBH,ZION,ZTS&'
+    urlTypes = 'types=' + type + '&'
+    urlRange = range
+    urlRequest1 = beginingBatchReq + first100 + urlTypes + urlRange 
+    urlRequest2 = beginingBatchReq + second100 + urlTypes + urlRange 
+    urlRequest3 = beginingBatchReq + third100 + urlTypes + urlRange 
+    urlRequest4 = beginingBatchReq + fourth100 + urlTypes + urlRange 
+    urlRequest5 = beginingBatchReq + fifth100+ urlTypes + urlRange 
+    urlRequest6 = beginingBatchReq + sixth5 + urlTypes + urlRange 
+
+    #encode strings as urls
+    urllib.parse.quote_plus(urlRequest1)
+    urllib.parse.quote_plus(urlRequest2)
+    urllib.parse.quote_plus(urlRequest3)
+    urllib.parse.quote_plus(urlRequest4)
+    urllib.parse.quote_plus(urlRequest5)
+    urllib.parse.quote_plus(urlRequest6)
+
+    r = requests.get(url = urlRequest1)
+    data = r.json()
+    updateData = data
+    r = requests.get(url = urlRequest2)
+    data = r.json()
+    updateData.update(data)            
+    r = requests.get(url = urlRequest3)
+    data = r.json()
+    updateData.update(data)    
+    r = requests.get(url = urlRequest4)
+    data = r.json()
+    updateData.update(data)    
+    r = requests.get(url = urlRequest5)
+    data = r.json()
+    updateData.update(data)    
+    r = requests.get(url = urlRequest6)
+    data = r.json()
+    updateData.update(data)
+    
+    return updateData
+
+
+# These functions are for calls on the whole S&P 500
+def getPrevious():
+    this = getFullBatch('', 'previous&')
+    return this
+def get1d():
+    this = getFullBatch('range=1d', 'chart')
+    return this
+def get3m():
+    this = getFullBatch('range=3m', 'chart')
+    return this
+def get1y():
+    this = getFullBatch('range=1y', 'chart')
+    return this
+
+
+
+
+# These functions are for calls on single stocks
+def getRealPrice(ticker):
+    urlRequest = 'https://api.iextrading.com/1.0/stock/' + ticker + '/price'
+    urllib.parse.quote_plus(urlRequest)
+    r = requests.get(url = urlRequest)
+    price = r.json()
+    return price
+
+def getSingleChart(ticker, range):
+    urlRequest = 'https://api.iextrading.com/1.0/stock/' + ticker + '/chart/' + range
+    urllib.parse.quote_plus(urlRequest)
+    print(urlRequest)
+    r = requests.get(url = urlRequest)
+    chart = r.json()
+    print(chart)
+    return chart
+
+def getFinancials(ticker):
+    urlRequest = 'https://api.iextrading.com/1.0/stock/' + ticker + '/financials?period=quarter'
+    urllib.parse.quote_plus(urlRequest)
+    print(urlRequest)
+    r = requests.get(url = urlRequest)
+    financials = r.json()
+    return financials
+
+
 def main():
    
     print(api.get_account().cash)
