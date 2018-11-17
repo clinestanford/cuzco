@@ -15,6 +15,7 @@ def pairs(request):
 	pairs = Pairs.objects.filter(tradable=True).all()
 
 	for pair in pairs:
+		
 		avgPrice1, avgPrice2 = pair.getAveragePriceDiff()
 		price1 = pair.ticker1.marketPrice()
 		price2 = pair.ticker2.marketPrice()
