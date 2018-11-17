@@ -147,7 +147,7 @@ def pairs(request):
             )
 
 
-def fillThirtyDays(request):
+def fillNinetyDays(request):
     ticker = request.GET["ticker"]
     chart = apiCalls.getSingleChart(ticker, '3m')
 

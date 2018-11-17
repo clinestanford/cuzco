@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path
 from Cuzcobot.views import pairs
 
-from Cuzcobot.views import pairs, fillThirtyDays
+from Cuzcobot.views import pairs, fillNinetyDays
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,5 +14,5 @@ urlpatterns = [
     path('pairs/', pairs),
     #path('test')
     #path('test'),
-    path('last30days/', fillThirtyDays),
+    path('last30days/', fillNinetyDays),
 ]
